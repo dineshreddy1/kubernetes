@@ -1,0 +1,56 @@
+export PATH=$PATH:/c/PKS-CLI:/c/kubectl:/c/helm
+Docker Image: kubectl get deployments -n ent-prod -o custom-columns="DEPLOYMENT:.metadata.name,IMAGE:.spec.template.spec.containers[*].image"
+KIRO Login: https://charter-cloud-connect.awsapps.com/start (USE login with amazon and use east zone)
+**alias kubectl='winpty kubectl'  --> to connect from gitbash to a pod
+
+Network/Firewall connectivity:
+**Telnet in pod: apk add busybox-extras
+**Curl: apk add curl (if not installing, first install telnet then curl)
+** kubectl get endpoints -n ocbo-sit  ---> to get the endpoints for connectivity test
+
+
+PODS/Deployments:
+**kubectl get ns ---> To get namespaces
+**kubectl get deployment -n ocbofms-dev    ----> To get deployments details
+**kubectl get po camunda-756f787c6b-fjkhv -c istio-proxy -n devops  --> Describe container pod
+**kubectl top pods -A                          --> To check pod CPU, MEMORY
+**kubectl get pods --all-namespaces --> List of pods on all namespaces                                                 
+**kubectl get pods -A                           --> List of pods 
+**kubectl get pods -A | grep -i init     -->(<Name: init container>)
+**kubectl get po -n <namespace>     --> List of pods o particular namespace 
+**kubectl describe pod <Name> -n <Name Space> ---> It will describe pod complete status
+**helm ls -n ocbo-nce-prod                 --> To get list of previous packages
+**helm history camunda -n ocbo-dev  --> Helm history
+**kubectl logs <podname> -c istio-proxy -n <namespace>  --> Pod Logs
+**kubectl logs -f <podname> -n <namespace> ---> To fetch the logs of a particular pod
+**kubectl logs -f camunda-68c76fd465-x75rv -n camunda-dev | grep -i error  --> Using GREP it will show only error logs
+**kubectl get pod -n <namespace> -o wide ---> To fetch all the pods in a namespace(we can check IP address)
+**kubectl exec -it camunda-756f787c6b-fjkhv -c istio-proxy -n devops -- sh --> container/pod logging
+**kubectl exec -it ocbo-6f469c4fdc-fzrqs -n ocbo-dev  /bin/sh or -- bash or -- sh or bash   ----> To go inside the container/pod
+**kubectl get pods -n ocbo-nce-prod -o wide  ---> To see which node is assigned on particular pod
+**kubectl get po fms-logging-758dd85d4f-8m9kv -n ocbofms-dev -o yaml ---> To open yaml  ctrl+c  to exit file
+** kubectl get pod ocbo-heliosproxy-54f9587fd9-c2442 -n ocbo-heliosproxy-dev -o yaml ---> To view on yaml file, particular docker image is running etc
+**kubectl cluster-info ---> to get cluster info
+
+
+Nodes:
+** kubectl get nodes          --> List of nodes
+** kubectl top nodes dev  ---> To get the load, CPU utilization, memory
+
+
+Ingress/ISTIO:
+**kubectl get ingress -A ---> To check IP address and port nos
+**kubectl get ingress -n ocbofms-dev ---> To check IP address of namespaces
+** kubectl get ingress fms-logging -n ocbofms-dev -o yaml   ---> To view ingress yaml file
+**kubectl describe ingress fms-logging -n ocbofms-dev  --> Describe Ingress
+**kubectl get ing -A --> To get the dns name
+**kubectl describe ingress fms-logging -n ocbofms-dev ----> To get DNS name 
+
+Secrets:
+**kubectl get secrets -n ocbo-nemesis-svc-dev --> Retrieve Secrets
+**kubectl get secrets ocbo-nemesis-svc-token-mfw7p -n ocbo-nemesis-svc-dev -o yaml --> Describe Secrets
+
+Replicas:
+**kubectl scale --replicas=0 deployment camunda-test -n optimize-test  ---> To scale down the particular deployment
+**kubectl scale --current-replicas=9 --replicas=12 deployment/ceis-camunda -n ocbo-nce-prod
+  ex: camunda-test, elastic search are two deployments in one namespace, If you want to scale down camunda the keep replicas=0 and if you want to see again keep replicas=1  
