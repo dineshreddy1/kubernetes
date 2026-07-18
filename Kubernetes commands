@@ -6,7 +6,6 @@ KIRO Login: https://charter-cloud-connect.awsapps.com/start (USE login with amaz
 Network/Firewall connectivity:
 **Telnet in pod: apk add busybox-extras
 **Curl: apk add curl (if not installing, first install telnet then curl)
-** kubectl get endpoints -n ocbo-sit  ---> to get the endpoints for connectivity test
 
 
 PODS/Deployments:
